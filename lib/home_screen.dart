@@ -17,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _edtSubjectController = TextEditingController();
   final TextEditingController _edtInstituteController = TextEditingController();
   final TextEditingController _edtOwnersController = TextEditingController();
+  final TextEditingController _edtOwnersPhoneController =TextEditingController();
+  final TextEditingController _edtContentcollectionDetailController =TextEditingController();
+
 
   List<Student> studentList = [];
 
@@ -54,6 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
           _edtSubjectController.text = "";
           _edtInstituteController.text = "";
           _edtOwnersController.text = "";
+          _edtOwnersPhoneController.text = "";
+         _edtContentcollectionDetailController.text = "";
+
 
           updateStudent = false;
           studentDialog();
@@ -117,6 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  const Text(
+                    "Owner's Number",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  TextFormField(
+                    controller: _edtOwnersPhoneController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xff2B9A9F), // Background color
@@ -128,6 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           "subject": _edtSubjectController.text.toString(),
                           "institute": _edtInstituteController.text.toString(),
                           "owner": _edtOwnersController.text.toString(),
+                          "ownernum": _edtOwnersPhoneController.text.toString(),
+                          "contentCollection": _edtContentcollectionDetailController.text.toString(),
+
                         };
 
                         if (updateStudent) {
@@ -184,6 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
         // _edtSubjectController.text = student.studentData!.subject!;
         _edtInstituteController.text = student.studentData!.institute!;
         _edtOwnersController.text = student.studentData!.owner!;
+        _edtOwnersPhoneController.text = student.studentData!.ownernum!;
+        _edtContentcollectionDetailController.text = student.studentData!.contentCollection!;
+
 
         updateStudent = true;
         studentDialog(key: student.key);

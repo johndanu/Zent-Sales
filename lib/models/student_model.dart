@@ -6,17 +6,18 @@ class Student {
 }
 
 class StudentData {
-
   String? institute;
   String? owner;
+  String? ownernum;
+  String? contentCollection;
 
-
-  StudentData({ this.institute,this.owner});
+  StudentData(
+      {this.institute, this.owner, this.ownernum, this.contentCollection});
 
   StudentData.fromJson(Map<dynamic, dynamic> json) {
-
     institute = json["institute"];
     owner = json["owner"];
-
+    ownernum = json["ownernum"];
+    contentCollection = json["contentCollection"];
   }
 }
