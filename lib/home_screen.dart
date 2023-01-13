@@ -17,9 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _edtSubjectController = TextEditingController();
   final TextEditingController _edtInstituteController = TextEditingController();
   final TextEditingController _edtOwnersController = TextEditingController();
-  final TextEditingController _edtOwnersPhoneController =TextEditingController();
-  final TextEditingController _edtContentcollectionDetailController =TextEditingController();
-
+  final TextEditingController _edtOwnersPhoneController =
+      TextEditingController();
+  final TextEditingController _edtContentcollectionDetailController =
+      TextEditingController();
 
   List<Student> studentList = [];
 
@@ -58,8 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _edtInstituteController.text = "";
           _edtOwnersController.text = "";
           _edtOwnersPhoneController.text = "";
-         _edtContentcollectionDetailController.text = "";
-
+          _edtContentcollectionDetailController.text = "";
 
           updateStudent = false;
           studentDialog();
@@ -90,15 +90,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   // TextField(
                   //     controller: _edtSubjectController,
                   //     decoration: const InputDecoration(helperText: "Subject")),
-                  const SizedBox(
-                    height: 10,
-                  ),
+
                   const Text(
                     "Institute Name",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
-                    height: 7,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: _edtInstituteController,
@@ -108,12 +106,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                   const Text(
                     "Owner's Name",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                   ),
+
                   const SizedBox(
-                    height: 7,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: _edtOwnersController,
@@ -123,12 +125,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                   const Text(
                     "Owner's Number",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
-                    height: 7,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: _edtOwnersPhoneController,
@@ -138,50 +143,74 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xff2B9A9F), // Background color
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  const Text(
+                    "Content Collection Detail",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextFormField(
+                    controller: _edtContentcollectionDetailController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                      onPressed: () {
-                        Map<String, dynamic> data = {
-                          "name": _edtNameController.text.toString(),
-                          "age": _edtAgeController.text.toString(),
-                          "subject": _edtSubjectController.text.toString(),
-                          "institute": _edtInstituteController.text.toString(),
-                          "owner": _edtOwnersController.text.toString(),
-                          "ownernum": _edtOwnersPhoneController.text.toString(),
-                          "contentCollection": _edtContentcollectionDetailController.text.toString(),
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xff2B9A9F), // Background color
+                        ),
+                        onPressed: () {
+                          Map<String, dynamic> data = {
+                            "name": _edtNameController.text.toString(),
+                            "age": _edtAgeController.text.toString(),
+                            "subject": _edtSubjectController.text.toString(),
+                            "institute":
+                                _edtInstituteController.text.toString(),
+                            "owner": _edtOwnersController.text.toString(),
+                            "ownernum":
+                                _edtOwnersPhoneController.text.toString(),
+                            "contentCollection":
+                                _edtContentcollectionDetailController.text
+                                    .toString(),
+                          };
 
-                        };
-
-                        if (updateStudent) {
-                          dbRef
-                              .child("Students")
-                              .child(key!)
-                              .update(data)
-                              .then((value) {
-                            int index = studentList
-                                .indexWhere((element) => element.key == key);
-                            studentList.removeAt(index);
-                            studentList.insert(
-                                index,
-                                Student(
-                                    key: key,
-                                    studentData: StudentData.fromJson(data)));
-                            setState(() {});
-                            Navigator.of(context).pop();
-                          });
-                        } else {
-                          dbRef
-                              .child("Students")
-                              .push()
-                              .set(data)
-                              .then((value) {
-                            Navigator.of(context).pop();
-                          });
-                        }
-                      },
-                      child: Text(updateStudent ? "Update Data" : "Save Data"))
+                          if (updateStudent) {
+                            dbRef
+                                .child("Students")
+                                .child(key!)
+                                .update(data)
+                                .then((value) {
+                              int index = studentList
+                                  .indexWhere((element) => element.key == key);
+                              studentList.removeAt(index);
+                              studentList.insert(
+                                  index,
+                                  Student(
+                                      key: key,
+                                      studentData: StudentData.fromJson(data)));
+                              setState(() {});
+                              Navigator.of(context).pop();
+                            });
+                          } else {
+                            dbRef
+                                .child("Students")
+                                .push()
+                                .set(data)
+                                .then((value) {
+                              Navigator.of(context).pop();
+                            });
+                          }
+                        },
+                        child:
+                            Text(updateStudent ? "Update Data" : "Save Data")),
+                  )
                 ],
               ),
             ),
@@ -209,8 +238,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _edtInstituteController.text = student.studentData!.institute!;
         _edtOwnersController.text = student.studentData!.owner!;
         _edtOwnersPhoneController.text = student.studentData!.ownernum!;
-        _edtContentcollectionDetailController.text = student.studentData!.contentCollection!;
-
+        _edtContentcollectionDetailController.text =
+            student.studentData!.contentCollection!;
 
         updateStudent = true;
         studentDialog(key: student.key);
