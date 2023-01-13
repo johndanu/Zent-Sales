@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _edtAgeController = TextEditingController();
   final TextEditingController _edtSubjectController = TextEditingController();
   final TextEditingController _edtInstituteController = TextEditingController();
+  final TextEditingController _edtOwnersController = TextEditingController();
 
   List<Student> studentList = [];
 
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _edtAgeController.text = "";
           _edtSubjectController.text = "";
           _edtInstituteController.text = "";
+          _edtOwnersController.text = "";
 
           updateStudent = false;
           studentDialog();
@@ -72,16 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextField(
-                    controller: _edtNameController,
-                    decoration: const InputDecoration(helperText: "Name"),
-                  ),
-                  TextField(
-                      controller: _edtAgeController,
-                      decoration: const InputDecoration(helperText: "Age")),
-                  TextField(
-                      controller: _edtSubjectController,
-                      decoration: const InputDecoration(helperText: "Subject")),
+                  // TextField(
+                  //   controller: _edtNameController,
+                  //   decoration: const InputDecoration(helperText: "Name"),
+                  // ),
+                  // TextField(
+                  //     controller: _edtAgeController,
+                  //     decoration: const InputDecoration(helperText: "Age")),
+                  // TextField(
+                  //     controller: _edtSubjectController,
+                  //     decoration: const InputDecoration(helperText: "Subject")),
                   const SizedBox(
                     height: 10,
                   ),
@@ -100,6 +102,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  const Text(
+                    "Owner's Name",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  TextFormField(
+                    controller: _edtOwnersController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xff2B9A9F), // Background color
@@ -110,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "age": _edtAgeController.text.toString(),
                           "subject": _edtSubjectController.text.toString(),
                           "institute": _edtInstituteController.text.toString(),
+                          "owner": _edtOwnersController.text.toString(),
                         };
 
                         if (updateStudent) {
@@ -161,10 +179,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget studentWidget(Student student) {
     return InkWell(
       onTap: () {
-        _edtNameController.text = student.studentData!.name!;
-        _edtAgeController.text = student.studentData!.age!;
-        _edtSubjectController.text = student.studentData!.subject!;
+        // _edtNameController.text = student.studentData!.name!;
+        // _edtAgeController.text = student.studentData!.age!;
+        // _edtSubjectController.text = student.studentData!.subject!;
         _edtInstituteController.text = student.studentData!.institute!;
+        _edtOwnersController.text = student.studentData!.owner!;
 
         updateStudent = true;
         studentDialog(key: student.key);
@@ -183,9 +202,9 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(student.studentData!.name!),
-                Text(student.studentData!.age!),
-                Text(student.studentData!.subject!),
+                // Text(student.studentData!.name!),
+                // Text(student.studentData!.age!),
+                // Text(student.studentData!.subject!),
               ],
             ),
             InkWell(
