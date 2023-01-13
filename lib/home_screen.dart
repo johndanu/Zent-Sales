@@ -1,4 +1,6 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_realtime_database_crud_tutorial/details.dart';
 import 'package:firebase_realtime_database_crud_tutorial/models/student_model.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
     retrieveStudentData();
   }
 
+  final List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? selectedValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,6 +174,68 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  DropdownButton2(
+                    isExpanded: true,
+                    hint: Row(
+                      children: const [
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              'Province',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    items: items
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value as String;
+                      });
+                    },
+                    iconSize: 14,
+                    buttonHeight: 30,
+                    buttonWidth: 120,
+                    buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: Colors.black26,
+                      ),
+                    ),
+                    buttonElevation: 2,
+                    itemHeight: 40,
+                    itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                    dropdownMaxHeight: 200,
+                    dropdownWidth: 200,
+                    dropdownPadding: null,
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    dropdownElevation: 8,
+                    scrollbarRadius: const Radius.circular(40),
+                    scrollbarThickness: 6,
+                    scrollbarAlwaysShow: true,
+                    offset: const Offset(-20, 0),
+                  ),
                   Center(
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -232,17 +307,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget studentWidget(Student student) {
     return InkWell(
       onTap: () {
-        // _edtNameController.text = student.studentData!.name!;
-        // _edtAgeController.text = student.studentData!.age!;
-        // _edtSubjectController.text = student.studentData!.subject!;
-        _edtInstituteController.text = student.studentData!.institute!;
-        _edtOwnersController.text = student.studentData!.owner!;
-        _edtOwnersPhoneController.text = student.studentData!.ownernum!;
-        _edtContentcollectionDetailController.text =
-            student.studentData!.contentCollection!;
-
-        updateStudent = true;
-        studentDialog(key: student.key);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DetailsPage()),
+        );
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -279,6 +347,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Icon(
                   Icons.delete,
                   color: Colors.red,
+                )),
+            InkWell(
+                onTap: () {
+                  // _edtNameController.text = student.studentData!.name!;
+                  // _edtAgeController.text = student.studentData!.age!;
+                  // _edtSubjectController.text = student.studentData!.subject!;
+                  _edtInstituteController.text =
+                      student.studentData!.institute!;
+                  _edtOwnersController.text = student.studentData!.owner!;
+                  _edtOwnersPhoneController.text =
+                      student.studentData!.ownernum!;
+                  _edtContentcollectionDetailController.text =
+                      student.studentData!.contentCollection!;
+
+                  updateStudent = true;
+                  studentDialog(key: student.key);
+                },
+                child: const Icon(
+                  Icons.edit,
+                  color: Color.fromARGB(255, 4, 2, 2),
                 ))
           ],
         ),
