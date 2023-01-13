@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _edtNameController = TextEditingController();
   final TextEditingController _edtAgeController = TextEditingController();
   final TextEditingController _edtSubjectController = TextEditingController();
-  
+  final TextEditingController _edtInstituteController = TextEditingController();
 
   List<Student> studentList = [];
 
@@ -51,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
           _edtNameController.text = "";
           _edtAgeController.text = "";
           _edtSubjectController.text = "";
+          _edtInstituteController.text = "";
+
           updateStudent = false;
           studentDialog();
         },
@@ -67,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               padding: const EdgeInsets.all(10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
@@ -82,6 +85,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
+                  const Text(
+                    "Institute Name",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  TextFormField(
+                    controller: _edtInstituteController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xff2B9A9F), // Background color
@@ -90,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Map<String, dynamic> data = {
                           "name": _edtNameController.text.toString(),
                           "age": _edtAgeController.text.toString(),
-                          "subject": _edtSubjectController.text.toString()
+                          "subject": _edtSubjectController.text.toString(),
+                          "institute": _edtInstituteController.text.toString(),
                         };
 
                         if (updateStudent) {
@@ -145,6 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _edtNameController.text = student.studentData!.name!;
         _edtAgeController.text = student.studentData!.age!;
         _edtSubjectController.text = student.studentData!.subject!;
+        _edtInstituteController.text = student.studentData!.institute!;
+
         updateStudent = true;
         studentDialog(key: student.key);
       },
