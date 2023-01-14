@@ -14,9 +14,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   DatabaseReference dbRef = FirebaseDatabase.instance.ref();
 
-  final TextEditingController _edtNameController = TextEditingController();
-  final TextEditingController _edtAgeController = TextEditingController();
-  final TextEditingController _edtSubjectController = TextEditingController();
   final TextEditingController _edtInstituteController = TextEditingController();
   final TextEditingController _edtOwnersController = TextEditingController();
   final TextEditingController _edtOwnersPhoneController =
@@ -35,17 +32,32 @@ class _HomeScreenState extends State<HomeScreen> {
     retrieveStudentData();
   }
 
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
+  final List<String> province = [
+    'Nothern',
   ];
-  String? selectedValue;
+  String? selectedProvice;
+
+  final List<String> District = [
+    'Jaffna',
+    'Kilinochchi',
+    'Vavuniya',
+    'Mannar',
+  ];
+  String? selectedDistrict;
+  final List<String> Status = [
+    'wanna Contact',
+    'Contacted',
+    'Meeting Scheduled',
+    'Proposal Delivered',
+    'Wanna Contact Again',
+    'Lost',
+    'Won',
+    'Form sent',
+    'Data collected',
+    'Listed in the website',
+    'Pending'
+  ];
+  String? selectedStatus;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,14 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xff2B9A9F),
         onPressed: () {
-          _edtNameController.text = "";
-          _edtAgeController.text = "";
-          _edtSubjectController.text = "";
           _edtInstituteController.text = "";
           _edtOwnersController.text = "";
           _edtOwnersPhoneController.text = "";
           _edtContentcollectionDetailController.text = "";
-          selectedValue = selectedValue;
+          selectedProvice = selectedProvice;
+          selectedDistrict = selectedDistrict;
+          selectedStatus = selectedStatus;
 
           updateStudent = false;
           studentDialog();
@@ -89,207 +100,333 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // TextField(
-                  //   controller: _edtNameController,
-                  //   decoration: const InputDecoration(helperText: "Name"),
-                  // ),
-                  // TextField(
-                  //     controller: _edtAgeController,
-                  //     decoration: const InputDecoration(helperText: "Age")),
-                  // TextField(
-                  //     controller: _edtSubjectController,
-                  //     decoration: const InputDecoration(helperText: "Subject")),
-
-                  const Text(
-                    "Institute Name",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                    controller: _edtInstituteController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+          return SingleChildScrollView(
+            child: Dialog(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Institute Name",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    "Owner's Name",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                    controller: _edtOwnersController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+                    const SizedBox(
+                      height: 5,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    "Owner's Number",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                    controller: _edtOwnersPhoneController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    "Content Collection Detail",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                    controller: _edtContentcollectionDetailController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                  ),
-                  DropdownButton2(
-                    isExpanded: true,
-                    hint: Row(
-                      children: const [
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              'Province',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
+                    TextFormField(
+                      controller: _edtInstituteController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                      ],
+                      ),
                     ),
-                    items: items
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      "Owner's Name",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      controller: _edtOwnersController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      "Owner's Number",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      controller: _edtOwnersPhoneController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      "Content Collection Detail",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      controller: _edtContentcollectionDetailController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropdownButton2(
+                      isExpanded: true,
+                      hint: Row(
+                        children: const [
+                          Expanded(
+                            child: Center(
                               child: Text(
-                                item,
-                                style: const TextStyle(
+                                'Province',
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                    iconSize: 14,
-                    buttonHeight: 30,
-                    buttonWidth: 120,
-                    buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                    buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: Colors.black26,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    buttonElevation: 2,
-                    itemHeight: 40,
-                    itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                    dropdownMaxHeight: 200,
-                    dropdownWidth: 200,
-                    dropdownPadding: null,
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    dropdownElevation: 8,
-                    scrollbarRadius: const Radius.circular(40),
-                    scrollbarThickness: 6,
-                    scrollbarAlwaysShow: true,
-                    offset: const Offset(-20, 0),
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xff2B9A9F), // Background color
+                      items: province
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedProvice,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedProvice = value as String;
+                        });
+                      },
+                      iconSize: 14,
+                      buttonHeight: 30,
+                      buttonWidth: 300,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Colors.black26,
                         ),
-                        onPressed: () {
-                          Map<String, dynamic> data = {
-                            "name": _edtNameController.text.toString(),
-                            "age": _edtAgeController.text.toString(),
-                            "subject": _edtSubjectController.text.toString(),
-                            "institute":
-                                _edtInstituteController.text.toString(),
-                            "owner": _edtOwnersController.text.toString(),
-                            "ownernum":
-                                _edtOwnersPhoneController.text.toString(),
-                            "contentCollection":
-                                _edtContentcollectionDetailController.text
-                                    .toString(),
-                          };
+                      ),
+                      buttonElevation: 2,
+                      itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 200,
+                      dropdownWidth: 200,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      dropdownElevation: 8,
+                      scrollbarRadius: const Radius.circular(40),
+                      scrollbarThickness: 6,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropdownButton2(
+                      isExpanded: true,
+                      hint: Row(
+                        children: const [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                'District',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      items: District.map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )).toList(),
+                      value: selectedDistrict,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedDistrict = value as String;
+                        });
+                      },
+                      iconSize: 14,
+                      buttonHeight: 30,
+                      buttonWidth: 300,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Colors.black26,
+                        ),
+                      ),
+                      buttonElevation: 2,
+                      itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 200,
+                      dropdownWidth: 200,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      dropdownElevation: 8,
+                      scrollbarRadius: const Radius.circular(40),
+                      scrollbarThickness: 6,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropdownButton2(
+                      isExpanded: true,
+                      hint: Row(
+                        children: const [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                'Status',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      items: province
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedStatus,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedStatus = value as String;
+                        });
+                      },
+                      iconSize: 14,
+                      buttonHeight: 30,
+                      buttonWidth: 300,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Colors.black26,
+                        ),
+                      ),
+                      buttonElevation: 2,
+                      itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 200,
+                      dropdownWidth: 200,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      dropdownElevation: 8,
+                      scrollbarRadius: const Radius.circular(40),
+                      scrollbarThickness: 6,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff2B9A9F), // Background color
+                          ),
+                          onPressed: () {
+                            Map<String, dynamic> data = {
+                              "institute":
+                                  _edtInstituteController.text.toString(),
+                              "owner": _edtOwnersController.text.toString(),
+                              "ownernum":
+                                  _edtOwnersPhoneController.text.toString(),
+                              "contentCollection":
+                                  _edtContentcollectionDetailController.text
+                                      .toString(),
+                              "province": selectedProvice.toString(),
+                              "District": selectedDistrict.toString(),
+                              "Status": selectedStatus.toString(),
+                            };
 
-                          if (updateStudent) {
-                            dbRef
-                                .child("Students")
-                                .child(key!)
-                                .update(data)
-                                .then((value) {
-                              int index = studentList
-                                  .indexWhere((element) => element.key == key);
-                              studentList.removeAt(index);
-                              studentList.insert(
-                                  index,
-                                  Student(
-                                      key: key,
-                                      studentData: StudentData.fromJson(data)));
-                              setState(() {});
-                              Navigator.of(context).pop();
-                            });
-                          } else {
-                            dbRef
-                                .child("Students")
-                                .push()
-                                .set(data)
-                                .then((value) {
-                              Navigator.of(context).pop();
-                            });
-                          }
-                        },
-                        child:
-                            Text(updateStudent ? "Update Data" : "Save Data")),
-                  )
-                ],
+                            if (updateStudent) {
+                              dbRef
+                                  .child("Students")
+                                  .child(key!)
+                                  .update(data)
+                                  .then((value) {
+                                int index = studentList.indexWhere(
+                                    (element) => element.key == key);
+                                studentList.removeAt(index);
+                                studentList.insert(
+                                    index,
+                                    Student(
+                                        key: key,
+                                        studentData:
+                                            StudentData.fromJson(data)));
+                                setState(() {});
+                                Navigator.of(context).pop();
+                              });
+                            } else {
+                              dbRef
+                                  .child("Students")
+                                  .push()
+                                  .set(data)
+                                  .then((value) {
+                                Navigator.of(context).pop();
+                              });
+                            }
+                          },
+                          child: Text(
+                              updateStudent ? "Update Data" : "Save Data")),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -317,7 +454,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 InstituteName: student.studentData!.institute!,
                 OwnerName: student.studentData!.owner!,
                 OwnerNumber: student.studentData!.ownernum!,
-                ContentCollection: student.studentData!.ownernum!),
+                ContentCollection: student.studentData!.ownernum!,
+                Province: student.studentData!.province!),
           ),
         );
       },
@@ -335,11 +473,8 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(student.studentData!.name!),
-                // Text(student.studentData!.age!),
-                // Text(student.studentData!.subject!),
                 Text(student.studentData!.institute!),
-                Text(student.studentData!.owner!),
+                Text(student.studentData!.province!),
                 Text(student.studentData!.contentCollection!),
                 Text(student.studentData!.ownernum!),
               ],
@@ -349,9 +484,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      // _edtNameController.text = student.studentData!.name!;
-                      // _edtAgeController.text = student.studentData!.age!;
-                      // _edtSubjectController.text = student.studentData!.subject!;
                       _edtInstituteController.text =
                           student.studentData!.institute!;
                       _edtOwnersController.text = student.studentData!.owner!;
@@ -359,6 +491,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           student.studentData!.ownernum!;
                       _edtContentcollectionDetailController.text =
                           student.studentData!.contentCollection!;
+                      selectedProvice = student.studentData!.province!;
 
                       updateStudent = true;
                       studentDialog(key: student.key);
@@ -369,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 30,
                   ),
                   InkWell(
                     onTap: () {
