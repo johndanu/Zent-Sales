@@ -73,11 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
           _edtOwnersController.text = "";
           _edtOwnersPhoneController.text = "";
           _edtContentcollectionDetailController.text = "";
+          selectedValue = selectedValue;
 
           updateStudent = false;
           studentDialog();
         },
-        child: const Icon(Icons.save),
+        child: const Icon(
+          Icons.create,
+        ),
       ),
     );
   }
@@ -309,7 +312,13 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DetailsPage()),
+          MaterialPageRoute(
+            builder: (context) => DetailsPage(
+                InstituteName: student.studentData!.institute!,
+                OwnerName: student.studentData!.owner!,
+                OwnerNumber: student.studentData!.ownernum!,
+                ContentCollection: student.studentData!.ownernum!),
+          ),
         );
       },
       child: Container(
@@ -329,45 +338,60 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Text(student.studentData!.name!),
                 // Text(student.studentData!.age!),
                 // Text(student.studentData!.subject!),
+                Text(student.studentData!.institute!),
+                Text(student.studentData!.owner!),
+                Text(student.studentData!.contentCollection!),
+                Text(student.studentData!.ownernum!),
               ],
             ),
-            InkWell(
-                onTap: () {
-                  dbRef
-                      .child("Students")
-                      .child(student.key!)
-                      .remove()
-                      .then((value) {
-                    int index = studentList
-                        .indexWhere((element) => element.key == student.key!);
-                    studentList.removeAt(index);
-                    setState(() {});
-                  });
-                },
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                )),
-            InkWell(
-                onTap: () {
-                  // _edtNameController.text = student.studentData!.name!;
-                  // _edtAgeController.text = student.studentData!.age!;
-                  // _edtSubjectController.text = student.studentData!.subject!;
-                  _edtInstituteController.text =
-                      student.studentData!.institute!;
-                  _edtOwnersController.text = student.studentData!.owner!;
-                  _edtOwnersPhoneController.text =
-                      student.studentData!.ownernum!;
-                  _edtContentcollectionDetailController.text =
-                      student.studentData!.contentCollection!;
+            Positioned.fill(
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      // _edtNameController.text = student.studentData!.name!;
+                      // _edtAgeController.text = student.studentData!.age!;
+                      // _edtSubjectController.text = student.studentData!.subject!;
+                      _edtInstituteController.text =
+                          student.studentData!.institute!;
+                      _edtOwnersController.text = student.studentData!.owner!;
+                      _edtOwnersPhoneController.text =
+                          student.studentData!.ownernum!;
+                      _edtContentcollectionDetailController.text =
+                          student.studentData!.contentCollection!;
 
-                  updateStudent = true;
-                  studentDialog(key: student.key);
-                },
-                child: const Icon(
-                  Icons.edit,
-                  color: Color.fromARGB(255, 4, 2, 2),
-                ))
+                      updateStudent = true;
+                      studentDialog(key: student.key);
+                    },
+                    child: const Icon(
+                      Icons.edit,
+                      color: Color.fromARGB(255, 4, 2, 2),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      dbRef
+                          .child("Students")
+                          .child(student.key!)
+                          .remove()
+                          .then((value) {
+                        int index = studentList.indexWhere(
+                            (element) => element.key == student.key!);
+                        studentList.removeAt(index);
+                        setState(() {});
+                      });
+                    },
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -10,14 +10,20 @@ class StudentData {
   String? owner;
   String? ownernum;
   String? contentCollection;
+  String? province;
 
   StudentData(
-      {this.institute, this.owner, this.ownernum, this.contentCollection});
+      {this.institute,
+      this.owner,
+      this.ownernum,
+      this.contentCollection,
+      this.province});
 
   StudentData.fromJson(Map<dynamic, dynamic> json) {
     institute = json["institute"];
     owner = json["owner"];
     ownernum = json["ownernum"];
     contentCollection = json["contentCollection"];
+    province = json["province"];
   }
 }
