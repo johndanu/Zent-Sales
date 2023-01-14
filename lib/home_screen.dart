@@ -20,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
       TextEditingController();
   final TextEditingController _edtContentcollectionDetailController =
       TextEditingController();
+       final TextEditingController _edtRemarksController =
+      TextEditingController();
 
   List<Student> studentList = [];
 
@@ -35,16 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<String> province = [
     'Nothern',
   ];
-  String? selectedProvice;
+  String? selectedProvince;
 
-  final List<String> District = [
+  final List<String> district = [
     'Jaffna',
     'Kilinochchi',
     'Vavuniya',
     'Mannar',
   ];
   String? selectedDistrict;
-  final List<String> Status = [
+  final List<String> status = [
     'wanna Contact',
     'Contacted',
     'Meeting Scheduled',
@@ -57,13 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
     'Listed in the website',
     'Pending'
   ];
-  String? selectedStatus;
+  String? selectedstatus;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Student Directory"),
-        backgroundColor: Color(0xff2B9A9F),
+        backgroundColor: const Color(0xff2B9A9F),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -76,15 +78,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xff2B9A9F),
+        backgroundColor: const Color(0xff2B9A9F),
         onPressed: () {
           _edtInstituteController.text = "";
           _edtOwnersController.text = "";
           _edtOwnersPhoneController.text = "";
           _edtContentcollectionDetailController.text = "";
-          selectedProvice = selectedProvice;
+           _edtRemarksController.text = "";
+          selectedProvince = selectedProvince;
           selectedDistrict = selectedDistrict;
-          selectedStatus = selectedStatus;
+          selectedstatus = selectedstatus;
+
 
           updateStudent = false;
           studentDialog();
@@ -181,7 +185,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                     const Text(
+                      "Remarks",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      controller: _edtRemarksController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
                       height: 10,
                     ),
                     DropdownButton2(
@@ -203,10 +226,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       items: province
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
+                          .map((item1) => DropdownMenuItem<String>(
+                                value: item1,
                                 child: Text(
-                                  item,
+                                  item1,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -215,10 +238,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ))
                           .toList(),
-                      value: selectedProvice,
-                      onChanged: (value) {
+                      value: selectedProvince,
+                      onChanged: (province) {
                         setState(() {
-                          selectedProvice = value as String;
+                          selectedProvince = province as String;
                         });
                       },
                       iconSize: 14,
@@ -246,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollbarAlwaysShow: true,
                       offset: const Offset(-20, 0),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     DropdownButton2(
@@ -256,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Expanded(
                             child: Center(
                               child: Text(
-                                'District',
+                                'district',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -267,21 +290,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      items: District.map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )).toList(),
+                      items: district
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
                       value: selectedDistrict,
-                      onChanged: (value) {
+                      onChanged: (district) {
                         setState(() {
-                          selectedDistrict = value as String;
+                          selectedDistrict = district as String;
                         });
                       },
                       iconSize: 14,
@@ -309,17 +334,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollbarAlwaysShow: true,
                       offset: const Offset(-20, 0),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    DropdownButton2(
+                      DropdownButton2(
                       isExpanded: true,
                       hint: Row(
                         children: const [
                           Expanded(
                             child: Center(
                               child: Text(
-                                'Status',
+                                'status',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -330,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      items: province
+                      items: status
                           .map((item) => DropdownMenuItem<String>(
                                 value: item,
                                 child: Text(
@@ -343,10 +368,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ))
                           .toList(),
-                      value: selectedStatus,
-                      onChanged: (value) {
+                      value: selectedstatus,
+                      onChanged: (status) {
                         setState(() {
-                          selectedStatus = value as String;
+                          selectedstatus = status as String;
                         });
                       },
                       iconSize: 14,
@@ -377,7 +402,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Center(
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xff2B9A9F), // Background color
+                            backgroundColor:
+                                const Color(0xff2B9A9F), // Background color
                           ),
                           onPressed: () {
                             Map<String, dynamic> data = {
@@ -389,9 +415,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               "contentCollection":
                                   _edtContentcollectionDetailController.text
                                       .toString(),
-                              "province": selectedProvice.toString(),
-                              "District": selectedDistrict.toString(),
-                              "Status": selectedStatus.toString(),
+                                      "remarks":
+                                  _edtRemarksController.text
+                                      .toString(),
+                              "province": selectedProvince.toString(),
+                              "district": selectedDistrict.toString(),
+                              "status": selectedstatus.toString(),
+
                             };
 
                             if (updateStudent) {
@@ -447,15 +477,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget studentWidget(Student student) {
     return InkWell(
       onTap: () {
+        // print(student.studentData!.district);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DetailsPage(
-                InstituteName: student.studentData!.institute!,
-                OwnerName: student.studentData!.owner!,
-                OwnerNumber: student.studentData!.ownernum!,
-                ContentCollection: student.studentData!.ownernum!,
-                Province: student.studentData!.province!),
+              InstituteName: student.studentData!.institute!,
+              OwnerName: student.studentData!.owner!,
+              OwnerNumber: student.studentData!.ownernum!,
+              ContentCollection: student.studentData!.contentCollection!,
+              Remarks: student.studentData!.remarks!,
+
+              Province: student.studentData!.province!,
+              District: student.studentData!.district!,
+              Status: student.studentData!.status!,
+
+            ),
           ),
         );
       },
@@ -491,7 +528,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           student.studentData!.ownernum!;
                       _edtContentcollectionDetailController.text =
                           student.studentData!.contentCollection!;
-                      selectedProvice = student.studentData!.province!;
+                           _edtRemarksController.text =
+                          student.studentData!.remarks!;
+                      selectedProvince = student.studentData!.province!;
+                      selectedDistrict = student.studentData!.district!;
+                      selectedstatus = student.studentData!.status!;
+
 
                       updateStudent = true;
                       studentDialog(key: student.key);
@@ -501,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Color.fromARGB(255, 4, 2, 2),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   InkWell(

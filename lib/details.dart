@@ -1,24 +1,35 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
-  DetailsPage({
+  const DetailsPage({
     super.key,
     required this.InstituteName,
     required this.OwnerName,
     required this.OwnerNumber,
     required this.ContentCollection,
+    required this.Remarks,
+
     required this.Province,
-    // required this.District,
-    // required this.Status,
+    required this.District,
+    required this.Status,
+
+
+
   });
 
   final String InstituteName;
   final String OwnerName;
   final String OwnerNumber;
   final String ContentCollection;
+  final String Remarks;
+
   final String Province;
-  // final String District;
-  // final String Status;
+  final String District;
+  final String Status;
+
+
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -29,8 +40,8 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Details Page"),
-          backgroundColor: Color(0xff2B9A9F),
+          title: const Text("Details Page"),
+          backgroundColor: const Color(0xff2B9A9F),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -42,27 +53,26 @@ class _DetailsPageState extends State<DetailsPage> {
                 children: [
                   Title(
                     color: Colors.blue,
-                    child: Text(
+                    child: const Text(
                       "Details",
                       style: TextStyle(
                           fontSize: 24, decoration: TextDecoration.underline),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "Institute Name :- ",
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        widget.InstituteName ??
-                            "AATHAVAN  name not registeered",
-                        style: TextStyle(
+                        widget.InstituteName,
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -70,15 +80,15 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "Owner's Name :- ",
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        widget.OwnerName ?? "AATHAVAN  name not registeered",
-                        style: TextStyle(
+                        widget.OwnerName,
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -86,15 +96,15 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "Owner's Number :- ",
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        widget.OwnerNumber ?? "AATHAVAN  name not registeered",
-                        style: TextStyle(
+                        widget.OwnerNumber,
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -102,16 +112,31 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "ContentCollection :- ",
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        widget.ContentCollection ??
-                            "AATHAVAN  name not registeered",
+                        widget.ContentCollection,
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                   Row(
+                    children: [
+                      const Text(
+                        "Remarks :- ",
                         style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        widget.Remarks,
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
@@ -119,52 +144,53 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "Province :- ",
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        widget.Province ?? "AATHAVAN  name not registeered",
-                        style: TextStyle(
+                        widget.Province,
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
                     ],
                   ),
-                  // Row(
-                  //   children: [
-                  //     Text(
-                  //       "District :- ",
-                  //       style: TextStyle(
-                  //         fontSize: 20,
-                  //       ),
-                  //     ),
-                  //     Text(
-                  //       widget.District ?? "AATHAVAN  name not registeered",
-                  //       style: TextStyle(
-                  //         fontSize: 20,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Text(
-                  //       "Status :- ",
-                  //       style: TextStyle(
-                  //         fontSize: 20,
-                  //       ),
-                  //     ),
-                  //     Text(
-                  //       widget.Status ?? "AATHAVAN  name not registeered",
-                  //       style: TextStyle(
-                  //         fontSize: 20,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                    Row(
+                    children: [
+                      const Text(
+                        "district :- ",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        widget.District,
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                   Row(
+                    children: [
+                      const Text(
+                        "status :- ",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        widget.Status,
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                
                 ],
               ),
             ),
